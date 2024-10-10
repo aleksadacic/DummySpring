@@ -2,6 +2,7 @@ package com.aleksadacic.dummyspring.controllers;
 
 import com.aleksadacic.dummyspring.model.User;
 import com.aleksadacic.dummyspring.services.UserService;
+import com.aleksadacic.springdataquerying.data.QueryData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,5 +58,10 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public List<User> search(@RequestBody QueryData<User> body) {
+        return userService.findAll(body.getSpecification());
     }
 }
